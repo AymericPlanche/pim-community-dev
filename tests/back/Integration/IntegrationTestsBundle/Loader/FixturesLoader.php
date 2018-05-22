@@ -90,8 +90,8 @@ class FixturesLoader implements FixturesLoaderInterface
         $dumpFile = sys_get_temp_dir().self::CACHE_DIR.$fixturesHash.'.sql';
 
         if (file_exists($dumpFile)) {
-            $this->dropDatabase();
-            $this->createDatabase();
+            $this->databaseSchemaHandler->reset();
+
             $this->restoreDatabase($dumpFile);
             $this->clearAclCache();
 
@@ -325,7 +325,7 @@ class FixturesLoader implements FixturesLoaderInterface
             '-h '.$this->container->getParameter('database_host'),
             '-u '.$this->container->getParameter('database_user'),
             '-p'.$this->container->getParameter('database_password'),
-            '--skip-add-drop-table',
+            '--no-create-info',
             '--quick',
             $this->container->getParameter('database_name'),
             '> '.$filepath,
