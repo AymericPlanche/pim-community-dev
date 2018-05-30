@@ -351,8 +351,7 @@ class ProductModelController
         ?ChannelInterface $channel,
         array $queryParameters,
         array $normalizerOptions
-    )
-    {
+    ) {
         $from = isset($queryParameters['page']) ? ($queryParameters['page'] - 1) * $queryParameters['limit'] : 0;
 
         $pqb = $this->pqbFromSizeFactory->create(['limit' => (int) $queryParameters['limit'], 'from' => (int) $from]);
@@ -383,7 +382,7 @@ class ProductModelController
         try {
             $count = 'true' === $queryParameters['with_count'] ? $productModels->count() : null;
             $paginatedProductModels = $this->offsetPaginator->paginate(
-                $this->normalizer->normalize($productModels, 'external_api'),
+                $this->normalizer->normalize($productModels, 'external_api', $normalizerOptions),
                 $paginationParameters,
                 $count
             );
@@ -528,8 +527,7 @@ class ProductModelController
         ?ChannelInterface $channel,
         array $queryParameters,
         array $normalizerOptions
-    )
-    {
+    ) {
         $pqbOptions = ['limit' => (int) $queryParameters['limit']];
         $searchParameterCrypted = null;
         if (isset($queryParameters['search_after'])) {

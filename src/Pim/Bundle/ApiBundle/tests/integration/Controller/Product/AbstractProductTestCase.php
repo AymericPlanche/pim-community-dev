@@ -2,7 +2,9 @@
 
 namespace Pim\Bundle\ApiBundle\tests\integration\Controller\Product;
 
+use PHPUnit\Framework\Assert;
 use Pim\Bundle\ApiBundle\tests\integration\ApiTestCase;
+use Pim\Component\Catalog\Model\FamilyVariantInterface;
 use Pim\Component\Catalog\Model\ProductInterface;
 use Pim\Component\Catalog\Model\ProductModelInterface;
 use Pim\Component\Catalog\tests\integration\Normalizer\NormalizedProductCleaner;
@@ -72,6 +74,23 @@ abstract class AbstractProductTestCase extends ApiTestCase
     }
 
     /**
+     * @param array  $data
+     *
+     * @return FamilyVariantInterface
+     * @throws \Exception
+     */
+    protected function createFamilyVariant(array $data = []) : FamilyVariantInterface
+    {
+        $family = $this->get('pim_catalog.factory.family_variant')->create();
+        $this->get('pim_catalog.updater.family_variant')->update($family, $data);
+        $constraintList = $this->get('validator')->validate($family);
+        $this->assertEquals(0, $constraintList->count());
+        $this->get('pim_catalog.saver.family_variant')->save($family);
+
+        return $family;
+    }
+
+    /**
      * Each time we create a product model, a batch job is pushed into the queue to calculate the
      * completeness of its descendants.
      *
@@ -110,7 +129,7 @@ abstract class AbstractProductTestCase extends ApiTestCase
         $expected = json_decode($expected, true);
 
         if (!isset($result['_embedded'])) {
-            \PHPUnit_Framework_Assert::fail($response->getContent());
+            Assert::fail($response->getContent());
         }
 
         foreach ($result['_embedded']['items'] as $index => $product) {
