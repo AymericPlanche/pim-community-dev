@@ -33,7 +33,7 @@ class CategoryUpdaterSpec extends ObjectBehavior
     {
         $this->shouldThrow(
             InvalidObjectException::objectExpected(
-                'stdClass',
+                'stdClasssssss',
                 'Akeneo\Component\Classification\Model\CategoryInterface'
             )
         )->during(
