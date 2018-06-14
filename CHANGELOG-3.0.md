@@ -64,6 +64,8 @@
 - Remove `Oro\Bundle\UserBundle\OroUserBundle`
 - Remove `Oro\Bundle\UserBundle\DependencyInjection`
 - Remove `Pim\Bundle\ImportExportBundle\JobLabel\TranslatedLabelProvider`
+- Remove `Pim\Bundle\EnrichBundle\Doctrine\Counter\CategoryItemsCounter`
+- Remove `Pim\Bundle\EnrichBundle\Doctrine\Counter\CategoryProductsCounter`
 
 - Change constructor of `Pim\Bundle\ImportExportBundle\Datagrid\JobDatagridProvider`, remove `Pim\Bundle\ImportExportBundle\JobLabel\TranslatedLabelProvider` argument 
 - Change constructor of `Pim\Bundle\ImportExportBundle\Form\Type\JobInstanceFormType`, remove `Pim\Bundle\ImportExportBundle\JobLabel\TranslatedLabelProvider` argument 
